@@ -123,14 +123,3 @@ gcc -o myPwd simple_pwd.c
 ```
 Current working directory: /home/user/project
 ```
-
-### Return Value Checks
-
-Each file properly checks return values for:
-
-- `open()` - Ensures the file descriptor is valid (non-negative).
-- `read()` - Handles cases where read fails.
-- `write()` - Handles cases where write fails.
-- `unlink()` - Deletes the file and could be checked for errors (optional improvement).
-- `getcwd()` - Ensures the result is non-NULL.
-- `close()` - Though `close()` is not explicitly checked, adding error handling for `close()` can be beneficial, especially in production code.
