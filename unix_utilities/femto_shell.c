@@ -24,11 +24,7 @@ int main(void)
 
         token = strtok(prompt, " ");       /* Split the prompt */
 
-        if (token == NULL)
-        {
-            printf("Good Bye :)\n");
-            break;
-        }
+        if (token == NULL)  continue;
 
         if (!strcmp(token, "exit"))
         {
