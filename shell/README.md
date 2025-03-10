@@ -7,11 +7,8 @@ This project consists of four progressively complex shell implementations in C: 
   - [Pico Shell](#2-pico-shell)  
   - [Nano Shell](#3-nano-shell)  
   - [Micro Shell](#4-micro-shell)  
-- [Usage](#usage)  
-- [Build Instructions](#build-instructions)  
+- [Usage](#usage)
 - [Examples](#examples)  
-- [Future Work](#future-work)  
-- [License](#license)  
 
 ---
 
