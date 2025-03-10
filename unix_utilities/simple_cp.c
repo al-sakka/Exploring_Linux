@@ -28,14 +28,17 @@ int main(int argc, char **argv)
     char *destination_path  = argv[2];
 
     int src_fd = open(source_path, (O_RDONLY));
-    int des_fd = open(destination_path, (O_CREAT | O_WRONLY), MODE);
-
-    if ((src_fd < ZERO) || (des_fd < ZERO))
+    if (src_fd < ZERO)
     {
-        /* Error */
-        printf("Couldn't open file\n");
         exit(OPEN_ERR);
     }
+    
+    int des_fd = open(destination_path, (O_CREAT | O_WRONLY | O_TRUNC), MODE);
+    if(des_fd < ZERO)
+    {
+        exit(OPEN_ERR);
+    }
+
 
     while ((num_read = read(src_fd, buf, COUNT)) > ZERO) /* Will return 0 at the end of the file */
     {

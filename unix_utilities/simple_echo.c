@@ -1,22 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define ZERO        (0)
-#define SUCCESS     (ZERO)
-#define ARG_ERR     (-1)
+#define ZERO (0)
+#define SUCCESS (ZERO)
+#define ARG_ERR (-1)
 
 int main(int argc, char **argv)
 {
-    if(argc < 2)
+    if (argc < 2)
     {
         /* Error */
         printf("Usage: %s file-name\n", argv[ZERO]);
         exit(ARG_ERR);
     }
 
-    for(int i = 1; i < argc; ++i)
+    for (int i = 1; i < argc; ++i)
     {
-        printf("%s ",argv[i]);
+        if (i == argc - 1)
+            printf("%s", argv[i]);
+        else
+            printf("%s ", argv[i]);
     }
 
     printf("\n");
