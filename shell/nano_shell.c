@@ -53,7 +53,7 @@ char *get_variable(char *name)
     {
         if (!strcmp(variables[i].name, name))
         {
-            return variables[i].value;
+            return (variables[i].value);
         }
     }
 
@@ -116,7 +116,7 @@ char *get_wd(void)
     return getcwd(buf, SIZE);
 }
 
-void replaceVar(char* input, const char* target, const char *replacement)
+void replaceVar(char* input, char* target, char *replacement)
 {
     char buffer[SIZE];
     char *pos = strstr(input, target);
@@ -163,12 +163,19 @@ void nano_shell(void)
                 }
             }
 
-            // TODO:: Replace the variable in the prompt
-
             char offset[SIZE_LOW] = "$";
             strcat(offset, var);
 
-            replaceVar(prompt, offset, get_variable(var));
+            char* replacement = get_variable(var);
+
+            if(replacement != NULL)
+            {
+                replaceVar(prompt, offset, replacement);
+            }
+            else
+            {
+                replaceVar(prompt, offset, " ");
+            }
 
             free(var);
         }
@@ -217,7 +224,7 @@ void nano_shell(void)
         {
             char *target = strchr(args[0], '=');
 
-            if ((target > args[0]) && (*(target + 1) != '\0'))
+            if ((target > args[0]) && (*(target + 1) != '\0') && (args_count == 1))
             {
 
                 *target = '\0';
