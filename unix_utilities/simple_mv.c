@@ -9,11 +9,10 @@
 #define OPEN_ERR    (-2)
 #define WRITE_ERR   (-3)
 #define MODE        (0644)
-#define COUNT       (100)
+#define COUNT       (1024)
 
 int main(int argc, char **argv)
 {
-
     if (argc < 3)
     {
         /* Error */
@@ -28,15 +27,23 @@ int main(int argc, char **argv)
     char *destination_path  = argv[2];
 
     int src_fd = open(source_path, (O_RDONLY));
-    int des_fd = open(destination_path, (O_CREAT | O_WRONLY), MODE);
-
-    if ((src_fd < ZERO) || (des_fd < ZERO))
+    
+    if (src_fd < ZERO)
+    {
+        /* Error */
+        printf("Couldn't open file\n");
+        exit(OPEN_ERR);
+    }
+    
+    int des_fd = open(destination_path, (O_CREAT | O_WRONLY | O_TRUNC), MODE);
+    if (des_fd < ZERO)
     {
         /* Error */
         printf("Couldn't open file\n");
         exit(OPEN_ERR);
     }
 
+    
     while ((num_read = read(src_fd, buf, COUNT)) > ZERO) /* Will return 0 at the end of the file */
     {
         if (write(des_fd, buf, num_read) < ZERO)
