@@ -124,12 +124,12 @@ ls: cannot access 'non-existing-dir': No such file or directory
 ## Usage  
 1. Clone the repository:  
 ```sh
-git clone https://github.com/username/shell-project.git
+git clone https://github.com/al-sakka/Exploring_Linux
 ```  
 
 2. Navigate to the project directory:  
 ```sh
-cd shell-project
+cd shell
 ```  
 
 3. Compile the desired shell version:  
