@@ -3,43 +3,35 @@
 
 #define TRUE (1)
 #define EXIT (0)
-#define SIZE (100)
+#define SIZE (1024)
 
 int main(void)
 {
+    char prompt[SIZE] = {0};
+    
     while (TRUE)
     {
-        char prompt[SIZE];
-        char *token;
 
         printf("Femto-Shell>> ");
+        fflush(stdout);
 
         if (fgets(prompt, sizeof(prompt), stdin) == NULL)
         {
-            printf("Good Bye :)\n");
             break;
         }
 
         prompt[strcspn(prompt, "\n")] = 0; /* Removes '\n' from the buffer */
+        
+        if(prompt[0] == 0) continue;
 
-        token = strtok(prompt, " ");       /* Split the prompt */
-
-        if (token == NULL)  continue;
-
-        if (!strcmp(token, "exit"))
+        if (!strcmp(prompt, "exit"))
         {
-            printf("Good Bye :)\n");
+            printf("Good Bye\n");
             break;
         }
-        else if (!strcmp(token, "echo"))
+        else if (!strncmp(prompt, "echo ", 5))
         {
-            token = strtok(NULL, " ");
-            while (token != NULL)
-            {
-                printf("%s ", token);
-                token = strtok(NULL, " ");
-            }
-            printf("\n");
+            printf("%s\n", prompt + 5);
         }
         else
         {
