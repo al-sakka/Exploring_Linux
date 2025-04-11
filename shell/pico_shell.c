@@ -43,7 +43,7 @@ void exec_command(char **args)
 
 char *get_wd(void)
 {
-    char *buf = (char *)malloc(SIZE);
+    char *buf = malloc(SIZE);
     if (buf == NULL)
         return NULL;
     return getcwd(buf, SIZE);
