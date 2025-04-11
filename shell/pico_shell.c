@@ -4,10 +4,10 @@
 #include <unistd.h>
 #include <string.h>
 
-#define TRUE    (1)
-#define END     (0)
+#define TRUE (1)
+#define END (0)
 #define FAILURE (-1)
-#define SIZE    (1024)
+#define SIZE (1024)
 
 void exit_cmd(void)
 {
@@ -15,7 +15,7 @@ void exit_cmd(void)
     exit(END);
 }
 
-void echo_cmd(int args_count, char** args)
+void echo_cmd(int args_count, char **args)
 {
     for (int k = 1; k < args_count; ++k)
     {
@@ -24,7 +24,7 @@ void echo_cmd(int args_count, char** args)
     printf("\n");
 }
 
-void exec_command(char** args)
+void exec_command(char **args)
 {
     pid_t pid = fork();
 
@@ -43,7 +43,7 @@ void exec_command(char** args)
 
 char *get_wd(void)
 {
-    char *buf = malloc(SIZE);
+    char *buf = (char *)malloc(SIZE);
     if (buf == NULL)
         return NULL;
     return getcwd(buf, SIZE);
@@ -59,15 +59,19 @@ void pico_shell(void)
         char *token;
         int args_count = 0;
 
-        printf("Pico:%s>> ", get_wd());
+        char *cwd = get_wd();
+        printf("Pico:%s>> ", cwd);
+        free(cwd);
 
-        fgets(prompt, sizeof(prompt), stdin);
+        if(fgets(prompt, sizeof(prompt), stdin) == NULL)
+            continue;
 
         prompt[strcspn(prompt, "\n")] = 0; /* Removes '\n' from the buffer */
 
         token = strtok(prompt, " \t\r\n"); /* Split the prompt */
 
-        if (token == NULL)  continue;
+        if (token == NULL)
+            continue;
 
         /* Tokenization of the prompt */
         while (token != NULL)
@@ -87,12 +91,19 @@ void pico_shell(void)
         }
         else if (!strcmp(args[0], "pwd"))
         {
-            printf("%s\n", get_wd());
+            char *cwd = get_wd();
+            printf("%s\n", cwd);
+            free(cwd);
         }
         else if (!strcmp(args[0], "cd"))
         {
             if (!chdir(args[1]))
-                printf("New directory: %s\n", get_wd());
+            {
+                char *cwd = get_wd();
+                printf("New directory: %s\n", cwd);
+                free(cwd);
+            }
+
             else
                 printf("Can't change directory\n");
         }
@@ -102,9 +113,6 @@ void pico_shell(void)
         }
     }
 }
-
-
-
 
 int main(void)
 {
