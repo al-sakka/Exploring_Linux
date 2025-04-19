@@ -129,8 +129,6 @@ esac
 
 # select
 
-#!/bin/bash
-
 echo "Choose a fruit:"
 
 select fruit in "Apple" "Banana" "Cherry" "Exit"
@@ -190,13 +188,13 @@ done
 
 # Special Syntax
 
-# pipe -> command 1 output is the input of command 2 : cmmand1 | command2
+# pipe -> command1 output is the input of command2 : cmmand1 | command2
 echo "testing ..." | grep "test"
 
 # && -> if command1 success, command2 will execute
 mkdir testing && cd testing
 
-# || -> of command1 failed, command2 will execute
+# || -> if command1 fails, command2 will execute
 cd testing || mkdir testing
 
 # ; -> run commands without any relation

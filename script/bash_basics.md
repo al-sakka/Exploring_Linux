@@ -40,10 +40,11 @@ declare -i NUM2=20
 ```bash
 ./script.sh arg1 arg2 arg3
 
-$#  # Number of arguments
-$0  # Script name
-$1, $2, ...  # Positional arguments
-$?  # Exit status of last command
+$#  # Number of arguments → 4
+$0  # Script name → ./script.sh
+$1  # Positional argument → arg1
+$2  # Positional argument → arg2
+$?  # Exit status of last command → 0
 ```
 
 ---
@@ -52,6 +53,7 @@ $?  # Exit status of last command
 
 ```bash
 declare string="Hello, World"
+
 echo "${string:3}"     # → "lo, World"
 echo "${string: -3}"   # → "rld"
 echo ${#string}        # → 12 (length)
@@ -63,6 +65,7 @@ echo ${#string}        # → 12 (length)
 
 ```bash
 filename="hello.txt"
+
 basename=${filename%.*}     # → "hello"
 extension=${filename##*.}   # → "txt"
 ```
@@ -108,23 +111,32 @@ touch newfile.txt
 ### 🧩 Functions
 
 ```bash
-function say_name() {
+function say_name() 
+{
+    # result
     echo "some name"
+
+    # status code
     return 0
 }
 
-FUN_NAME=$(say_name)  # Captures stdout
-echo "$FUN_NAME"
-echo $?                # Prints return status
+FUN_NAME=$(say_name)    # FUN_NAME = "some name"
+echo "$FUN_NAME"        # → "some name"
+
+echo $?                 # return status → 0
 ```
 
 Read file line-by-line:
 ```bash
-function readFile() {
+function readFile() 
+{
     local filename="$1"
     while IFS= read -r line; do
         echo "$line"
     done < "$filename"
+
+    # status code
+    return 0
 }
 ```
 
@@ -133,11 +145,11 @@ function readFile() {
 ### 🔘 Conditions
 
 ```bash
-if [ -f "$1" ]; then
+if [ -f "$1" ]; then    # is file exists
     echo "File exists"
 fi
 
-if [ -x "$1" ]; then
+if [ -x "$1" ]; then    # is file executable
     echo "File is executable"
 fi
 ```
@@ -183,11 +195,17 @@ done
 
 **While Loop:**
 ```bash
-ITERATION=0
+declare -i ITERATION=0
+
 while true; do
     echo "$ITERATION"
     ((ITERATION++))
-    if ((ITERATION == 6)); then break; fi
+    # or ITERATION=$((ITERATION + 1))
+
+    if ((ITERATION == 6)); then
+        break
+    fi
+    
     sleep 1
 done
 ```
@@ -227,10 +245,10 @@ echo "more" >> output.txt    # Append
 ### 🚦 Special Syntax
 
 ```bash
-command1 | command2       # Pipe
-command1 && command2      # Run 2 if 1 succeeds
-command1 || command2      # Run 2 if 1 fails
-command1 ; command2       # Run both regardless
+command1 | command2       # command1 output is the input of command2
+command1 && command2      # if command1 success, command2 will execute
+command1 || command2      # if command1 fails, command2 will execute
+command1 ; command2       # run commands without any relation
 ```
 
 ---
