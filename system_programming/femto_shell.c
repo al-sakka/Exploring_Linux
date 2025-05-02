@@ -5,13 +5,12 @@
 #define EXIT (0)
 #define SIZE (1024)
 
-int main(void)
+int femtoshell_main(int argc, char *argv[])
 {
     char prompt[SIZE] = {0};
-    
+
     while (TRUE)
     {
-
         printf("Femto-Shell>> ");
         fflush(stdout);
 
@@ -20,9 +19,10 @@ int main(void)
             break;
         }
 
-        prompt[strcspn(prompt, "\n")] = 0; /* Removes '\n' from the buffer */
-        
-        if(prompt[0] == 0) continue;
+        prompt[strcspn(prompt, "\n")] = 0;  // Remove '\n' from the buffer
+
+        if (prompt[0] == 0)
+            continue;
 
         if (!strcmp(prompt, "exit"))
         {
